@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {Bokor, Inter, Nunito_Sans} from "next/font/google";
+import {Inter, Nunito_Sans} from "next/font/google";
 import "./globals.css";
 import ContainerMd from "@/components/containers/ContainerMd";
 import Footer from "@/components/footers/Footer";
@@ -29,7 +29,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <main className="flex-1 flex flex-col">
                         {children}
                     </main>
-
                     <Footer />
                 </ContainerMd>
             </div>
