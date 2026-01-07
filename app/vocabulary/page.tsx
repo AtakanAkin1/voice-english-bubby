@@ -21,6 +21,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const Vocabulary = () => {
     return (
+        //To-Do: Kod tekrarı var..
         <div className="flex flex-col pb-10">
             <div className="flex items-center justify-between">
                 <div>

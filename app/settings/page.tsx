@@ -19,7 +19,7 @@ const Settings = () => {
     return (
         <div className="flex flex-col pb-10">
             <CustomHeading text="Settings" textDirection="justify-center" />
-            <div className="flex flex-col gap-5 items-center justify-center">
+            <div className="flex flex-col gap-5 items-center justify-center mx-50">
                 <CustomBox>
                    <div className={styles.boxDiv}>
                        <span className="font-nunito">AI Model</span>

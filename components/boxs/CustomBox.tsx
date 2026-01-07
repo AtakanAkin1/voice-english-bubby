@@ -5,7 +5,7 @@ interface ContainerProps{
 
 const CustomBox = ({children} : ContainerProps) => {
     return (
-        <div className="box-border size-full border-1 p-5 rounded-lg w-2/3">
+        <div className="box-border size-full border-1 p-5 rounded-lg">
             {children}
         </div>
     );
