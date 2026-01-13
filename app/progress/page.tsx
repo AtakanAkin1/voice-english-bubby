@@ -2,9 +2,9 @@ import React from 'react';
 import CustomHeading from "@/components/headings/CustomHeading";
 import {Button} from "@/components/ui/button";
 import { RiGraduationCapFill } from "react-icons/ri";
-import CustomBox from "@/components/boxs/CustomBox";
 import { MdTimer } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
+import StatCard from "@/components/stats/StatCard";
 
 const Progress = () => {
     return (
@@ -26,28 +26,25 @@ const Progress = () => {
                     </Button>
                 </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-10 items-stretch">
-                <CustomBox>
-                   <div>
-                       <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
-                           <RiGraduationCapFill className="text-[#4c78fa]" size={20} />
-                       </div>
-                   </div>
-                </CustomBox>
-                <CustomBox>
-                    <div>
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
-                            <MdTimer className="text-[#4c78fa]" size={20} />
-                        </div>
-                    </div>
-                </CustomBox>
-                <CustomBox>
-                    <div>
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
-                            <FaCheckCircle className="text-[#4c78fa]" size={20} />
-                        </div>
-                    </div>
-                </CustomBox>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-15 mt-10 items-stretch">
+                <StatCard
+                    icon={<RiGraduationCapFill className="text-[#4c78fa]" size={20} />}
+                    title="Words Learned"
+                    value="1,240"
+                    change={{ value: "+12%", positive: true }}
+                />
+                <StatCard
+                    icon={<MdTimer className="text-[#4c78fa]" size={20} />}
+                    title="Speaking Time"
+                    value="4h 30m"
+                    change={{ value: "+5%", positive: true }}
+                />
+                <StatCard
+                    icon={<FaCheckCircle className="text-[#4c78fa]" size={20} />}
+                    title="Success Rate"
+                    value="85%"
+                    change={{ value: "+2%", positive: true }}
+                />
             </div>
         </div>
     );
