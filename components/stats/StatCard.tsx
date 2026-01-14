@@ -16,7 +16,7 @@ const StatCard = (props: StatCardProps) => {
     const { icon, title, value, change } = props;
     return (
         <CustomBox>
-            <div>
+            <div className="w-1/2">
                 <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
                     {icon}
                 </div>

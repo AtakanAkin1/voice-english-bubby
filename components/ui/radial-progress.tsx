@@ -15,7 +15,7 @@ export function RadialProgress({
         {
             name: "Progress",
             value: percent,
-            fill: "#4c78fa", // mavi
+            fill: "#4c78fa",
         },
     ]
 
@@ -37,7 +37,6 @@ export function RadialProgress({
                 <RadialBar dataKey="value" cornerRadius={10} />
             </RadialBarChart>
 
-            {/* Orta Metin */}
             <div className="absolute flex flex-col items-center">
                 <span className="font-inter text-2xl">{value}</span>
                 <span className="text-sm text-gray-400">Visitors</span>

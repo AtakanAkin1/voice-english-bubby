@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import CustomHeading from "@/components/headings/CustomHeading";
 import {Button} from "@/components/ui/button";
@@ -5,6 +6,9 @@ import { RiGraduationCapFill } from "react-icons/ri";
 import { MdTimer } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import StatCard from "@/components/stats/StatCard";
+import {DailySpeakingChart} from "@/components/charts/DailySpeakingChart";
+import {SkillBreakdownChart} from "@/components/charts/SkillBreakdownChart";
+import {DailyGoal} from "@/components/charts/DailyGoal";
 
 const Progress = () => {
     return (
@@ -45,6 +49,15 @@ const Progress = () => {
                     value="85%"
                     change={{ value: "+2%", positive: true }}
                 />
+            </div>
+            <div>
+                <DailySpeakingChart/>
+            </div>
+            <div>
+                <SkillBreakdownChart/>
+            </div>
+            <div>
+                <DailyGoal/>
             </div>
         </div>
     );
