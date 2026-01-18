@@ -15,7 +15,7 @@ export function SkillBreakdownChart() {
     ];
 
     return (
-        <Card className="rounded-xl">
+        <Card className="rounded-xl h-full flex flex-col">
             <CardHeader>
                 <h3 className="font-semibold">Skill Breakdown</h3>
                 <p className="text-sm text-muted-foreground">
@@ -33,6 +33,7 @@ export function SkillBreakdownChart() {
                         <Bar
                             dataKey="value"
                             radius={[8, 8, 0, 0]}
+                            barSize={48}
                             fill="#4c78fa"
                         />
                     </BarChart>

@@ -50,13 +50,15 @@ const Progress = () => {
                     change={{ value: "+2%", positive: true }}
                 />
             </div>
-            <div>
-                <DailySpeakingChart/>
+            <div className="flex items-stretch gap-5 mt-10">
+                <div className="flex-1">
+                    <DailySpeakingChart/>
+                </div>
+                <div className="w-1/3">
+                    <SkillBreakdownChart/>
+                </div>
             </div>
-            <div>
-                <SkillBreakdownChart/>
-            </div>
-            <div>
+            <div className="mt-10">
                 <DailyGoal/>
             </div>
         </div>

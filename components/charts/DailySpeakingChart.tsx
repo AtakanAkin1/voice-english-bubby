@@ -20,7 +20,7 @@ export function DailySpeakingChart() {
     ];
 
     return (
-        <Card className="rounded-xl">
+        <Card className="rounded-xl h-full flex flex-col">
             <CardHeader className="pb-2">
                 <div className="flex justify-between items-center">
                     <div>
