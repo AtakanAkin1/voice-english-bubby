@@ -18,6 +18,15 @@ import {IoSearchSharp} from "react-icons/io5";
 import {Badge} from "@/components/ui/badge";
 import {HiSpeakerWave} from "react-icons/hi2";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+
 
 const Vocabulary = () => {
     return (
@@ -31,9 +40,61 @@ const Vocabulary = () => {
                     </span>
                 </div>
                 <div>
-                    <Button variant="default" size="sm">
-                        <GoPlus/> Add New Word
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="default" size="sm">
+                                <GoPlus className="mr-1" /> Add New Word
+                            </Button>
+                        </DialogTrigger>
+
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Add New Word</DialogTitle>
+                            </DialogHeader>
+                            <div className="space-y-4">
+                                <input
+                                    type="text"
+                                    placeholder="Word"
+                                    className="w-full rounded-md border px-3 py-2 text-sm"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Usage"
+                                    className="w-full rounded-md border px-3 py-2 text-sm"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Example"
+                                    className="w-full rounded-md border px-3 py-2 text-sm"
+                                />
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue  placeholder="Choose your type..."/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="noun">
+                                               Noun
+                                            </SelectItem>
+
+                                            <SelectItem value="verb">
+                                                Verb
+                                            </SelectItem>
+
+                                            <SelectItem value="adjective">
+                                                Adjective
+                                            </SelectItem>
+
+                                            <SelectItem value="adverb">
+                                                Adverb
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                <Button className="w-full">Save</Button>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
             <Card className="w-full mt-10">

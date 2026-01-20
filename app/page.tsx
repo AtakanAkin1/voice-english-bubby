@@ -4,7 +4,7 @@ import Microphone from "@/components/voices/Microphone";
 import {UserNameConstants} from "@/constants/UserNameConstants";
 
 export default function Home() {
-  return (
+    return (
       <div className="flex flex-col flex-1">
           {/* Chat Messages */}
           <div className="flex-1 overflow-auto px-30">
