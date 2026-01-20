@@ -1,10 +1,10 @@
+"use client"
 import React from 'react';
 import {
     Select,
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
@@ -14,8 +14,21 @@ import CustomBox from "@/components/boxs/CustomBox";
 import styles from "./settings.module.css";
 import { Switch } from "@/components/ui/switch";
 import CustomHeading from "@/components/headings/CustomHeading";
+import {useSettingsStore} from "@/store/settingsStore";
 
 const Settings = () => {
+    const {
+        difficulty,
+        setDifficulty,
+        aiModel,
+        setAIModel,
+        topic,
+        setTopic,
+        voiceReply,
+        setVoiceReply,
+        score
+    } = useSettingsStore();
+
     return (
         <div className="flex flex-col pb-10">
             <CustomHeading text="Settings" textDirection="justify-center" />
@@ -23,9 +36,12 @@ const Settings = () => {
                 <CustomBox>
                    <div className={styles.boxDiv}>
                        <span className="font-nunito">AI Model</span>
-                       <Select>
+                       <Select
+                           value={aiModel}
+                           onValueChange={setAIModel}
+                       >
                            <SelectTrigger className="w-[180px]">
-                               <SelectValue placeholder="GPT-4o" />
+                               <SelectValue/>
                            </SelectTrigger>
                            <SelectContent>
                                <SelectGroup>
@@ -48,9 +64,12 @@ const Settings = () => {
                 <CustomBox>
                     <div className={styles.boxDiv}>
                         <span className="font-nunito">Difficulty</span>
-                        <Select>
+                        <Select
+                            value={difficulty}
+                            onValueChange={(value) => setDifficulty(value)}
+                        >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Intermediate" />
+                                <SelectValue/>
                             </SelectTrigger>
 
                             <SelectContent>
@@ -85,9 +104,12 @@ const Settings = () => {
                 <CustomBox>
                     <div className={styles.boxDiv}>
                         <span className="font-nunito">Topic</span>
-                        <Select>
+                        <Select
+                            value={topic}
+                            onValueChange={setTopic}
+                        >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Daily Life" />
+                                <SelectValue/>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -110,19 +132,20 @@ const Settings = () => {
                 <CustomBox>
                     <div className={styles.boxDiv}>
                         <span className="font-nunito">Voice Reply</span>
-                        <Switch />
+                        <Switch
+                            checked={voiceReply}
+                            onCheckedChange={(checked) => setVoiceReply(checked)}
+                        />
                     </div>
                 </CustomBox>
                 <CustomBox>
-                   <div className="">
-                       <RadialProgress value={300} max={900}/>
-
+                   <div>
+                       <RadialProgress value={score} max={15} description={"Daily Goal"}/>
                        <div className="text-center">
                            Your data entries contribute to the model's <br/>learning process.
                        </div>
                    </div>
                 </CustomBox>
-
             </div>
         </div>
     );

@@ -2,13 +2,12 @@
 
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts"
 
-export function RadialProgress({
-                                   value,
-                                   max = 100,
-                               }: {
-    value: number
-    max?: number
-}) {
+export function RadialProgress({value,max = 100, description}:
+    {
+        value: number
+        max?: number
+        description: string
+    }) {
     const percent = (value / max) * 100
 
     const data = [
@@ -39,7 +38,7 @@ export function RadialProgress({
 
             <div className="absolute flex flex-col items-center">
                 <span className="font-inter text-2xl">{value}</span>
-                <span className="text-sm text-gray-400">Visitors</span>
+                <span className="text-sm text-gray-400">{description}</span>
             </div>
         </div>
     )
