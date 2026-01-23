@@ -1,7 +1,7 @@
-import React from 'react';
+"use client"
+import React, {useState} from 'react';
 import CustomHeading from "@/components/headings/CustomHeading";
 import {Button} from "@/components/ui/button";
-import {GoPlus} from "react-icons/go";
 import {BsFilterLeft} from "react-icons/bs";
 import {IoFilterOutline} from "react-icons/io5";
 import {VocabularyCardWord} from "@/mockDatas/VocabularyCardWord";
@@ -18,17 +18,13 @@ import {IoSearchSharp} from "react-icons/io5";
 import {Badge} from "@/components/ui/badge";
 import {HiSpeakerWave} from "react-icons/hi2";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-
+import WordModal from "@/components/modals/WordModal";
+import {speakEnglish} from "@/utils/speakEnglish";
 
 const Vocabulary = () => {
+    const [openModal, setOpenModal] = useState(false);
+    const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+
     return (
         //To-Do: Kod tekrarı var..
         <div className="flex flex-col pb-10">
@@ -40,61 +36,15 @@ const Vocabulary = () => {
                     </span>
                 </div>
                 <div>
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant="default" size="sm">
-                                <GoPlus className="mr-1" /> Add New Word
-                            </Button>
-                        </DialogTrigger>
-
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Add New Word</DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                                <input
-                                    type="text"
-                                    placeholder="Word"
-                                    className="w-full rounded-md border px-3 py-2 text-sm"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Usage"
-                                    className="w-full rounded-md border px-3 py-2 text-sm"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Example"
-                                    className="w-full rounded-md border px-3 py-2 text-sm"
-                                />
-                                <Select>
-                                    <SelectTrigger>
-                                        <SelectValue  placeholder="Choose your type..."/>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectItem value="noun">
-                                               Noun
-                                            </SelectItem>
-
-                                            <SelectItem value="verb">
-                                                Verb
-                                            </SelectItem>
-
-                                            <SelectItem value="adjective">
-                                                Adjective
-                                            </SelectItem>
-
-                                            <SelectItem value="adverb">
-                                                Adverb
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                                <Button className="w-full">Save</Button>
-                            </div>
-                        </DialogContent>
-                    </Dialog>
+                    <Button
+                        size="sm"
+                        onClick={() => {
+                            setModalMode("add");
+                            setOpenModal(true);
+                        }}
+                    >
+                        Add Vocabulary
+                    </Button>
                 </div>
             </div>
             <Card className="w-full mt-10">
@@ -130,6 +80,13 @@ const Vocabulary = () => {
                                     className="cursor-pointer hover:scale-110 transition"
                                     color="#4c78fa"
                                     size={20}
+                                    onClick={() => {
+                                        speakEnglish({
+                                            word: item.word,
+                                            definition: item.definition,
+                                            example: item.example,
+                                        })
+                                    }}
                                 />
                             </div>
                         </CardHeader>
@@ -137,9 +94,9 @@ const Vocabulary = () => {
                             <h3 className="font-inter text-lg font-semibold">
                                 {item.word}
                             </h3>
-                            <span className="block text-xs text-muted-foreground mt-1">
-                              {item.phonetic}
-                            </span>
+                            {/*<span className="block text-xs text-muted-foreground mt-1">*/}
+                            {/*  {item.phonetic}*/}
+                            {/*</span>*/}
                             <div className="font-inter pt-2">
                                 {item.definition}
                             </div>
@@ -150,12 +107,23 @@ const Vocabulary = () => {
                         <CardFooter className="border-t">
                             <div className="flex items-center justify-between w-full pt-3">
                                 <Badge variant="outline">{item.status}</Badge>
-                                <HiOutlineDotsHorizontal className="cursor-pointer hover:scale-110 transition"/>
+                                <HiOutlineDotsHorizontal
+                                    className="cursor-pointer hover:scale-110 transition"
+                                    onClick={() => {
+                                        setModalMode("edit");
+                                        setOpenModal(true);
+                                    }}
+                                />
                             </div>
                         </CardFooter>
                     </Card>
                 ))}
             </div>
+            <WordModal
+                open={openModal}
+                onOpenChange={setOpenModal}
+                mode={modalMode}
+            />
         </div>
     );
 };
