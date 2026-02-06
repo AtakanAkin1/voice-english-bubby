@@ -21,8 +21,8 @@ export function speakEnglish(props: ISpeakEnglish) {
 
     const parts: ISpeechPart[] = [
         { text: word, rate: 0.8, pitch: 1.1, pauseAfter: 500 },
-        { text: definition, rate: 0.9, pitch: 1, pauseAfter: 400 },
-        { text: example, rate: 1, pitch: 1, pauseAfter: 0 },
+        { text: definition, rate: 0.8, pitch: 1.1, pauseAfter: 400 },
+        { text: example, rate: 0.8, pitch: 1.1, pauseAfter: 200 },
     ];
 
     let index = 0;

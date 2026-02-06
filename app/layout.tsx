@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${inter.variable} ${nunito.variable}`}>
+        <link rel="icon" href="/brainLogo.ico"/>
         <body className="antialiased">
         <div className="min-h-screen flex flex-col">
             <div className="flex-1 flex flex-col">

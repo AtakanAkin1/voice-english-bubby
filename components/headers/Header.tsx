@@ -21,7 +21,7 @@ const Header = () => {
                         />
                     </div>
                     <div className="block">
-                        <div className="block text-lg font-bold font-inter">Voice English Bubby</div>
+                        <div className="block text-lg font-bold font-inter">Voice English Buddy</div>
                         <div className="block text-sm text-gray-500 font-nunito">Practice English by speaking with AI
                         </div>
                     </div>
