@@ -8,7 +8,7 @@ const FullScreenLoader = () => {
             <Lottie
                 animationData={loadingAnimation}
                 loop
-                style={{ width: 140, height: 140 }}
+                style={{ width: 350, height: 350 }}
             />
         </div>
     );

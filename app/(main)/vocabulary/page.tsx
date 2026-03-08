@@ -18,56 +18,96 @@ import {Badge} from "@/components/ui/badge";
 import {HiSpeakerWave} from "react-icons/hi2";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import WordModal from "@/components/modals/WordModal";
-import {speakEnglish} from "@/utils/speakEnglish";
+import {speakVocabulary} from "@/utils/voiceSpeaking/speakVocabulary";
 import { WordFormData } from "@/components/modals/WordModal";
-import {addVocabulary, ICreate, getVocabularies, IVocabulary, getVocabularyById} from "@/lib/vocabulary.service";
+import {
+    addVocabulary,
+    ICreate,
+    getVocabularies,
+    IVocabulary,
+    getVocabularyById,
+    IUpdate, updateVocabulary, getVocabulariesBySearch
+} from "@/lib/vocabulary/vocabulary.service";
 import {WORD_STATUS_BADGE_VARIANT_MAP, WORD_STATUS_LABEL_MAP} from "@/constants/wordStatus";
 import {TbVocabularyOff} from "react-icons/tb";
 import {WORD_TYPES_BADGE_VARIANT_MAP, WORD_TYPES_LABEL_MAP} from "@/constants/wordTypes";
-import FullScreenLoader from "@/components/loaders/FullScreenLoader";
+import {Skeleton} from "@/components/ui/skeleton";
 
 const Vocabulary = () => {
 
+    //#region UseState
     const [openModal, setOpenModal] = useState(false);
     const [modalMode, setModalMode] = useState<"add" | "edit">("add");
     const [vocabulary, setVocabulary] = useState<IVocabulary[]>([]);
     const [selectedVocabulary, setSelectedVocabulary] = useState<IVocabulary>();
     const [isLoading, setIsLoading] = useState(false);
+    const [search, setSearch] = useState("");
+    //#endregion
+
+    //#region UseEffect
+    useEffect(() => {
+        void fetchVocabulary();
+    }, []);
 
     useEffect(() => {
+        const timer = setTimeout(async () => {
+            if (search) {
+                const result = await getVocabulariesBySearch(search.toLowerCase());
+                setVocabulary(result);
+            }else{
+                await fetchVocabulary();
+            }
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [search]);
+    //#endregion
+
+    //#region HandleEvent
+    const fetchVocabulary = async () => {
         setIsLoading(true);
-        debugger
-        const fetchVocabulary = async () =>{
-            setIsLoading(false)
-            const vocabulary = await  getVocabularies();
-            setVocabulary(vocabulary);
-        }
-        void fetchVocabulary();
-    }, [vocabulary]);
+        const vocabulary = await getVocabularies();
+        setVocabulary(vocabulary);
+        setIsLoading(false);
+    }
 
     const handleSubmitEvent = async (data: WordFormData) => {
-        debugger;
-        const payload: ICreate = {
-            word: data.word,
-            definition: data.definition || '',
-            example: data.example || '',
-            wordType: data.type,
-            wordStatus: data.status
-        };
-        console.log(payload);
-        await addVocabulary(payload)
+        if(modalMode === "add"){
+            const create: ICreate = {
+                word: data.word,
+                definition: data.definition || '',
+                example: data.example || '',
+                wordType: data.type,
+                wordStatus: data.status,
+                searchText: data.word.toLowerCase()
+            };
+            await addVocabulary(create);
+
+        }
+        if(modalMode === "edit"){
+            const update: IUpdate = {
+                id: data.id!,
+                word: data.word,
+                definition: data.definition || '',
+                example: data.example || '',
+                wordType: data.type || '',
+                wordStatus: data.status || '',
+                searchText: data.word.toLowerCase()
+            };
+            await updateVocabulary(update);
+        }
+        await fetchVocabulary();
     }
 
     const handleEditModel = async (id: string) => {
-        debugger;
-
         const vocabulary = await getVocabularyById(id);
         setSelectedVocabulary(vocabulary);
         setModalMode("edit");
         setOpenModal(true);
     }
+    //#endregion
+
     return (
-        //To-Do: Kod tekrarı var..
         <div className="flex flex-col pb-10">
             <div className="flex items-center justify-between">
                 <div>
@@ -93,7 +133,10 @@ const Vocabulary = () => {
                     <div className="flex items-center gap-3">
                         <div className="flex-1">
                             <InputGroup className="bg-gray-100">
-                                <InputGroupInput placeholder="Search for a word..."/>
+                                <InputGroupInput
+                                    placeholder="Search for a word..."
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
                                 <InputGroupAddon>
                                     <IoSearchSharp/>
                                 </InputGroupAddon>
@@ -113,7 +156,34 @@ const Vocabulary = () => {
             </Card>
 
             {
-                vocabulary.length ? (
+                isLoading ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10 items-stretch">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <Card key={index} className="flex flex-col h-full">
+                                <CardHeader className="p-2 px-5">
+                                    <div className="flex items-center justify-between">
+                                        <Skeleton className="h-5 w-20 rounded-md" />
+                                        <Skeleton className="h-5 w-5 rounded-full" />
+                                    </div>
+                                </CardHeader>
+
+                                <CardContent className="flex-1">
+                                    <Skeleton className="h-6 w-32 mb-3 rounded-md" />
+                                    <Skeleton className="h-4 w-full mb-2 rounded-md" />
+                                    <Skeleton className="h-4 w-5/6 mb-2 rounded-md" />
+                                    <Skeleton className="h-16 w-full mt-4 rounded-xl" />
+                                </CardContent>
+
+                                <CardFooter className="border-t">
+                                    <div className="flex items-center justify-between w-full pt-3">
+                                        <Skeleton className="h-5 w-16 rounded-md" />
+                                        <Skeleton className="h-5 w-5 rounded-full" />
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                    </div>
+                ) : vocabulary.length ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10 items-stretch">
                         {vocabulary.map((item) => (
                             <Card key={item.id} className="flex flex-col h-full hover:shadow-md transition">
@@ -127,7 +197,7 @@ const Vocabulary = () => {
                                             color="#4c78fa"
                                             size={20}
                                             onClick={() => {
-                                                speakEnglish({
+                                                speakVocabulary({
                                                     word: item.word,
                                                     definition: item.definition ?? "",
                                                     example: item.example ?? "",
@@ -183,7 +253,7 @@ const Vocabulary = () => {
                 onSubmit={handleSubmitEvent}
                 data={selectedVocabulary}
             />
-            {isLoading && <FullScreenLoader />}
+            {/*{isLoading && <FullScreenLoader />}*/}
         </div>
     );
 };

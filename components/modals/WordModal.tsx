@@ -4,7 +4,7 @@ import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVal
 import {useEffect, useState} from "react";
 import {WORD_STATUS_OPTIONS, WordStatus} from "@/constants/wordStatus";
 import {WordTypes, WORD_TYPES_OPTIONS} from "@/constants/wordTypes";
-import {IVocabulary} from "@/lib/vocabulary.service";
+import {IVocabulary} from "@/lib/vocabulary/vocabulary.service";
 
 interface WordModalProps {
     open: boolean;
@@ -14,6 +14,7 @@ interface WordModalProps {
     data?: IVocabulary
 }
 export interface WordFormData {
+    id?: string;
     word: string;
     definition: string | null;
     example: string | null;
@@ -27,9 +28,11 @@ const WordModal = ({ open, mode, onOpenChange, onSubmit, data }: WordModalProps)
     const [example, setExample] = useState<string>('');
     const [type, setType] = useState<WordTypes>(WordTypes.Verb);
     const [status, setStatus] = useState<WordStatus>(WordStatus.Learning);
+    const [id, setId] = useState<string>('');
 
     useEffect(() => {
         if(mode === "edit" && data){
+            setId(data.id);
             setWord(data.word);
             setDefinition(data.definition ?? '');
             setExample(data.example ?? '');
@@ -44,8 +47,10 @@ const WordModal = ({ open, mode, onOpenChange, onSubmit, data }: WordModalProps)
             setStatus(WordStatus.Learning);
         }
     },[mode,data]);
+
     const handleSubmit = () => {
         onSubmit({
+            id: id,
             word: word.trim(),
             definition: definition || null,
             example: example || null,
@@ -53,7 +58,17 @@ const WordModal = ({ open, mode, onOpenChange, onSubmit, data }: WordModalProps)
             status: status,
         });
         onOpenChange(false);
+        clearModal();
     };
+
+    const clearModal = () => {
+        setWord('');
+        setDefinition('');
+        setExample('');
+        setType(WordTypes.Verb);
+        setStatus(WordStatus.Learning);
+        setId('');
+    }
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

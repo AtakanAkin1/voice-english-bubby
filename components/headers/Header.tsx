@@ -3,6 +3,7 @@ import React from 'react';
 import Image from "next/image";
 import CustomButton from "@/components/buttons/CustomButton";
 import {usePathname} from "next/navigation";
+import CustomBadge from "@/components/badges/CustomBadge";
 
 const Header = () => {
     const pathname : string = usePathname();
@@ -21,15 +22,20 @@ const Header = () => {
                         />
                     </div>
                     <div className="block">
-                        <div className="block text-lg font-bold font-inter">Voice English Buddy</div>
+                        <div className="flex justify-center items-center gap-2 text-lg font-bold font-inter">
+                            Voice English Buddy
+                            <CustomBadge text="Beta"/>
+                        </div>
                         <div className="block text-sm text-gray-500 font-nunito">Practice English by speaking with AI
                         </div>
                     </div>
                 </div>
-                <CustomButton
-                    text={isHome ? "Settings" : "Back"}
-                    href={isHome ? "/settings" : "/"}
-                />
+                {pathname !== "/login" && (
+                    <CustomButton
+                        text={isHome ? "Settings" : "Back"}
+                        href={isHome ? "/settings" : "/"}
+                    />
+                )}
             </div>
         </div>
     );

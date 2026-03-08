@@ -18,7 +18,7 @@ export const WORD_STATUS_LABEL_MAP: Record<WordStatus, string> =
 
 export const WORD_STATUS_BADGE_VARIANT_MAP: Record<WordStatus, "default" | "secondary" | "outline" | "destructive"> = {
     [WordStatus.Learning]: "secondary",
-    [WordStatus.Reviewing]: "outline",
-    [WordStatus.Mastered]: "default",
+    [WordStatus.Reviewing]: "secondary",
+    [WordStatus.Mastered]: "secondary",
 };
 

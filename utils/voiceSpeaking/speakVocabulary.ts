@@ -13,7 +13,7 @@ interface ISpeechPart{
     pauseAfter: number;
 }
 
-export function speakEnglish(props: ISpeakEnglish) {
+export function speakVocabulary(props: ISpeakEnglish) {
     if (typeof window === "undefined") return;
 
     const { word, definition, example } = props;

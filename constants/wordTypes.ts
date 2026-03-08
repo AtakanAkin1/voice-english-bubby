@@ -1,4 +1,3 @@
-
 export enum WordTypes {
     Noun = 10,
     Verb = 11,
@@ -21,7 +20,7 @@ export const WORD_TYPES_LABEL_MAP: Record<WordTypes, string> =
 
 export const WORD_TYPES_BADGE_VARIANT_MAP: Record<WordTypes, "default" | "secondary" | "outline" | "destructive"> = {
     [WordTypes.Noun]: "secondary",
-    [WordTypes.Verb]: "outline",
-    [WordTypes.Adjective]: "destructive",
-    [WordTypes.Adverb]: "default",
+    [WordTypes.Verb]: "secondary",
+    [WordTypes.Adjective]: "secondary",
+    [WordTypes.Adverb]: "secondary",
 };

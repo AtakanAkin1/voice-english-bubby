@@ -1,16 +1,21 @@
 "use client";
-import React from 'react';
+import React, {useEffect} from 'react';
 import CustomHeading from "@/components/headings/CustomHeading";
 import {Button} from "@/components/ui/button";
 import { RiGraduationCapFill } from "react-icons/ri";
 import { MdTimer } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
+import { MdLocalFireDepartment } from "react-icons/md";
 import StatCard from "@/components/stats/StatCard";
 import {DailySpeakingChart} from "@/components/charts/DailySpeakingChart";
 import {SkillBreakdownChart} from "@/components/charts/SkillBreakdownChart";
 import {DailyGoal} from "@/components/charts/DailyGoal";
+import {useRouter} from "next/navigation";
 
 const Progress = () => {
+    const router = useRouter();
+    useEffect(() => {
+        router.push("/");
+    }, []);
     return (
         //To-Do: Update code repeat...
         <div className="flex flex-col pb-10">
@@ -44,10 +49,11 @@ const Progress = () => {
                     change={{ value: "+5%", positive: true }}
                 />
                 <StatCard
-                    icon={<FaCheckCircle className="text-[#4c78fa]" size={20} />}
-                    title="Success Rate"
-                    value="85%"
-                    change={{ value: "+2%", positive: true }}
+                    icon={<MdLocalFireDepartment className="text-[#ea580c]" size={25} />}
+                    title="Speaking Streak"
+                    value="15 Days"
+                    change={{ value: "+3%", positive: true }}
+                    bgColor={"#fff7ed"}
                 />
             </div>
             <div className="flex items-stretch gap-5 mt-10">

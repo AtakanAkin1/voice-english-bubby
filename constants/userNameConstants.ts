@@ -1,4 +1,5 @@
 export class UserNameConstants {
-    static  readonly You = "You";
-    static  readonly Voxy = "Voxy";
+    static  readonly User = "user";
+    static  readonly Voxy = "voxy";
+    static  readonly Assistant = "assistant";
 }

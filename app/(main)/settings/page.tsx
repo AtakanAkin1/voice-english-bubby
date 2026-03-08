@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Select,
     SelectContent,
@@ -15,8 +15,10 @@ import styles from "./settings.module.css";
 import { Switch } from "@/components/ui/switch";
 import CustomHeading from "@/components/headings/CustomHeading";
 import {useSettingsStore} from "@/store/settingsStore";
+import {auth} from "@/lib/firabase/firebase";
 
 const Settings = () => {
+    const [maxDaily] = useState<number>(50);
     const {
         difficulty,
         setDifficulty,
@@ -26,9 +28,27 @@ const Settings = () => {
         setTopic,
         voiceReply,
         setVoiceReply,
-        score
+        dailyRequest,
+        setDailyRequest
     } = useSettingsStore();
 
+    const getDailyRequest =  async () => {
+        const token = await auth.currentUser?.getIdToken();
+
+        const res = await fetch("/api/user/limit", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        debugger;
+        const data = await res.json();
+        const {used} = data;
+        setDailyRequest(used);
+        console.log(data);
+    }
+    useEffect(() => {
+        void getDailyRequest();
+    }, []);
     return (
         <div className="flex flex-col pb-10">
             <CustomHeading text="Settings" textDirection="justify-center" />
@@ -47,14 +67,6 @@ const Settings = () => {
                                <SelectGroup>
                                    <SelectItem value="gpt-4o">
                                        GPT-4o
-                                   </SelectItem>
-
-                                   <SelectItem value="claude" disabled>
-                                       Claude <span className="ml-2 text-xs text-muted-foreground">(Coming Soon)</span>
-                                   </SelectItem>
-
-                                   <SelectItem value="gemini" disabled>
-                                       Google Gemini <span className="ml-2 text-xs text-muted-foreground">(Coming Soon)</span>
                                    </SelectItem>
                                </SelectGroup>
                            </SelectContent>
@@ -117,12 +129,12 @@ const Settings = () => {
                                         Daily Life
                                     </SelectItem>
 
-                                    <SelectItem value="sports" disabled>
-                                        Sports <span className="ml-2 text-xs text-muted-foreground">(Coming Soon)</span>
+                                    <SelectItem value="sports">
+                                        Sports
                                     </SelectItem>
 
-                                    <SelectItem value="histories" disabled>
-                                        Histories <span className="ml-2 text-xs text-muted-foreground">(Coming Soon)</span>
+                                    <SelectItem value="histories">
+                                        Histories
                                     </SelectItem>
                                 </SelectGroup>
                             </SelectContent>
@@ -135,14 +147,15 @@ const Settings = () => {
                         <Switch
                             checked={voiceReply}
                             onCheckedChange={(checked) => setVoiceReply(checked)}
+                            disabled
                         />
                     </div>
                 </CustomBox>
                 <CustomBox>
                    <div>
-                       <RadialProgress value={score} max={15} description={"Daily Goal"}/>
+                       <RadialProgress value={dailyRequest} max={maxDaily} description={"Daily AI Usage"}/>
                        <div className="text-center">
-                           Your data entries contribute to the model's <br/>learning process.
+                           You have 50 AI requests available each day. <br/>Every request increases your remaining count by 1.
                        </div>
                    </div>
                 </CustomBox>
